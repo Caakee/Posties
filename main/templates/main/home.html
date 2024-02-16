@@ -1,15 +1,13 @@
 {% extends "main/base.html" %}
 
-{% block title %}
-    Posties - Home
-{% endblock %}
+{% block title %}Posties - Home{% endblock %}
 
 {% block content %}
-    <h1>Home</h1>
+    <center><u><h1>POSTIES</h1></u></center>
 
     {% if user.is_authenticated %}
-        <a href="/logout">Logout</a>
+        <button onclick="location.href=href='/logout'" class="btn btn-danger" style="float:right">Logout</button>
     {% else %}
-        <a href="/login">Login</a>
+        <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right">Login</button>
     {% endif %}
 {% endblock %}
