@@ -6,10 +6,14 @@
 
 {% block content %}
     <div class="row justify-content-center">
-        <form method="POST" class="form-group">
-            {% csrf_token %}
-            {{form}}
-            <button type="submit" class="btn btn-success">Register</button>
-        </form>
+        {% if user.is_authenticated %}
+            <h1>You are already signed in.</h1>
+        {% else %}
+            <form method="POST" class="form-group">
+                {% csrf_token %}
+                {{form}}
+                <button type="submit" class="btn btn-success">Register</button>
+            </form>
+        {% endif %}
     </div>
 {% endblock %}
