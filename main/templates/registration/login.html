@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 
 {% block title %}
-    Posties - Account Registration
+    Posties - Login
 {% endblock %}
 
 {% block content %}
@@ -9,7 +9,9 @@
         <form method="POST" class="form-group">
             {% csrf_token %}
             {{form}}
-            <button type="submit" class="btn btn-success">Register</button>
+            <button type="submit" class="btn btn-success">Login</button>
+            <br><br>
+            <p>Don't have an account? Create one <a href="/register">Here</a></p>
         </form>
     </div>
 {% endblock %}
