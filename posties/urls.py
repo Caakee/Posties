@@ -25,6 +25,8 @@ urlpatterns = [
     path('', include("django.contrib.auth.urls")),
     path("register/", v.register, name="register"),
     path("accounts/", include("allauth.urls")),
+    path('all_events/', v.all_events, name='all_events'),
+    path('add_event/', v.add_event, name='add_event'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
