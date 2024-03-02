@@ -11,18 +11,18 @@ def home(response):
     }
     return render(response, "main/home.html")
 
-def all_events(request):                                                                                                 
-    all_events = Events.objects.all()                                                                                    
-    out = []                                                                                                             
-    for event in all_events:                                                                                             
-        out.append({                                                                                                     
-            'title': event.name,                                                                                         
-            'id': event.id,                                                                                              
-            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),                                                         
-            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),                                                             
-        })                                                                                                               
-                                                                                                                      
-    return JsonResponse(out, safe=False) 
+def all_events(request):
+    all_events = Events.objects.all()
+    out = []
+    for event in all_events:
+        out.append({
+            'title': event.name,
+            'id': event.id,
+            'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
+            'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
+        })
+
+    return JsonResponse(out, safe=False)
  
 def add_event(request):
     start = request.GET.get("start", None)
