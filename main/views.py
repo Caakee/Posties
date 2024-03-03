@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
-from main.models import Events
+from .models import Events
 
 # Create your views here.
 def home(response):

@@ -24,7 +24,7 @@
                 $(document).ready(function () {
                     var calendar = $('#calendar').fullCalendar({
                         header: {
-                            left: '',
+                            left: 'prev,next',
                             center: '',
                             right: ''
                         },
@@ -34,6 +34,7 @@
                         editable: true,
                         eventLimit: true,
                         columnHeader: false,
+                        allDayDefault: true,
                         select: function (start, end, allDay) {
                             var title = prompt("Enter Message");
                             if (title) {
