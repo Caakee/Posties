@@ -20,43 +20,71 @@
             {% block content %}
             {% endblock %}
 
-            <script>
-                $(document).ready(function () {
-                    var calendar = $('#calendar').fullCalendar({
-                        header: {
-                            left: 'prev,next',
-                            center: '',
-                            right: ''
-                        },
-                        events: '/all_events',
-                        selectable: true,
-                        selectHelper: true,
-                        editable: true,
-                        eventLimit: true,
-                        columnHeader: false,
-                        allDayDefault: true,
-                        select: function (start, end, allDay) {
-                            var title = prompt("Enter Message");
-                            if (title) {
-                                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                                $.ajax({
-                                    type: "GET",
-                                    url: '/add_event',
-                                    data: {'title': title, 'start': start, 'end': end},
-                                    dataType: "json",
-                                    success: function (data) {
-                                        calendar.fullCalendar('refetchEvents');
-                                    },
-                                    error: function (data) {
-                                        alert('Error: Please try again');
-                                    }
-                                });
-                            }
-                        },
+            <style>
+                .fc-today {
+                    background-color:inherit !important;
+                }
+            </style>
+
+            {% if user.is_authenticated %}
+                <script>
+                    $(document).ready(function () {
+                        var calendar = $('#calendar').fullCalendar({
+                            header: {
+                                left: 'prev,next',
+                                center: '',
+                                right: ''
+                            },
+                            events: '/all_events',
+                            selectable: true,
+                            selectHelper: true,
+                            editable: true,
+                            eventLimit: true,
+                            columnHeader: false,
+                            allDayDefault: true,
+                            eventOrder: '',
+                            select: function (start, end, allDay) {
+                                var title = prompt("Enter Message");
+                                if (title) {
+                                    var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                                    var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                                    $.ajax({
+                                        type: "GET",
+                                        url: '/add_event',
+                                        data: {'title': title, 'start': start, 'end': end},
+                                        dataType: "json",
+                                        success: function (data) {
+                                            calendar.fullCalendar('refetchEvents');
+                                        },
+                                        error: function (data) {
+                                            alert('Error: Please try again');
+                                        }
+                                    });
+                                }
+                            },
+                        });
                     });
-                });
-            </script>
+                </script>
+            {% else %}
+                <script>
+                    $(document).ready(function () {
+                        var calendar = $('#calendar').fullCalendar({
+                            header: {
+                                left: 'prev,next',
+                                center: '',
+                                right: ''
+                            },
+                            events: '/all_events',
+                            selectHelper: true,
+                            editable: true,
+                            eventLimit: true,
+                            columnHeader: false,
+                            allDayDefault: true,
+                            eventOrder: '',
+                        });
+                    });
+                </script>
+            {% endif %}
 
             <hr>
             <footer>
