@@ -24,15 +24,16 @@
                 $(document).ready(function () {
                     var calendar = $('#calendar').fullCalendar({
                         header: {
-                            left: 'prev,next today',
-                            center: 'title',
-                            right: 'month,agendaWeek,agendaDay'
+                            left: '',
+                            center: '',
+                            right: ''
                         },
                         events: '/all_events',
                         selectable: true,
                         selectHelper: true,
                         editable: true,
                         eventLimit: true,
+                        columnHeader: false,
                         select: function (start, end, allDay) {
                             var title = prompt("Enter Message");
                             if (title) {
