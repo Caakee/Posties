@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.http import JsonResponse
 from .models import Events
+from django.utils.timezone import datetime
 
 # Create your views here.
 def home(response):
@@ -29,6 +30,9 @@ def add_event(request):
     end = request.GET.get("end", None)
     title = request.GET.get("title", None)
     event = Events(name=str(title), start=start, end=end)
+    event.log_date = datetime.now()
+    event.userID = request.user.id
+    event.username = request.user
     event.save()
     data = {}
     return JsonResponse(data)
