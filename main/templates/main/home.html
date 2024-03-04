@@ -11,7 +11,23 @@
         <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right">Login</button>
     {% endif %}
 
+    <button type="button" class="btn btn-light" style="font-size:20px" id="prev">
+        <b>&lt;</b>
+    </button>
+    <button type="button" class="btn btn-light" style="font-size:20px" id="next">
+        <b>&gt;</b>
+    </button>
+    <script>
+        $("#next").click(function() {
+            $("#calendar").fullCalendar("next");
+            $("#calendar").fullCalendar("next");
+        });
+        $("#prev").click(function() {
+            $("#calendar").fullCalendar("prev");
+            $("#calendar").fullCalendar("prev");
+        });
+    </script>
     <div class="col-md-12">
         <div id='calendar'></div>
-    </div> 
+    </div>
 {% endblock %}

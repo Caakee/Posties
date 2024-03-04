@@ -16,8 +16,6 @@
             body {
                 background-image: url("{% static 'main/posties background.jpg' %}");
                 background-size: cover;
-                background-position: center center;
-                background-repeat: no-repeat;
                 margin: 1%;
             }
 
@@ -33,6 +31,17 @@
                 background: yellow;
             }
 
+            .fc-today {
+                background-color:inherit !important;
+            }
+
+            .fc-day-number {
+                display: none;
+            }
+
+            .fc-event {
+                height: 50px !important;
+            }
         </style>
 
         <title>{% block title %}{% endblock %}</title>
@@ -43,29 +52,11 @@
             {% block content %}
             {% endblock %}
 
-            <style>
-                .fc-today {
-                    background-color:inherit !important;
-                }
-
-                .fc-day-number {
-                    display: none;
-                }
-
-                .fc-event {
-                    height: 50px !important;
-                }
-            </style>
-
             {% if user.is_authenticated %}
                 <script>
                     $(document).ready(function () {
                         var calendar = $('#calendar').fullCalendar({
-                            header: {
-                                left: 'prev,next',
-                                center: '',
-                                right: ''
-                            },
+                            header: false,
                             events: '/all_events',
                             selectable: true,
                             selectHelper: true,
@@ -102,11 +93,7 @@
                 <script>
                     $(document).ready(function () {
                         var calendar = $('#calendar').fullCalendar({
-                            header: {
-                                left: 'prev,next',
-                                center: '',
-                                right: ''
-                            },
+                            header: false,
                             events: '/all_events',
                             selectHelper: true,
                             eventLimit: true,
