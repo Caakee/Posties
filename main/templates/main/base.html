@@ -15,8 +15,9 @@
         <style>
             body {
                 background-image: url("{% static 'main/posties background.jpg' %}");
+                background-size: cover;
+                background-position: center center;
                 background-repeat: no-repeat;
-                background-size: auto;
                 margin: 1%;
             }
 
@@ -27,6 +28,11 @@
                 padding-bottom: 14px;
                 border-style: solid;
             }
+
+            input {
+                background: yellow;
+            }
+
         </style>
 
         <title>{% block title %}{% endblock %}</title>
