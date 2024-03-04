@@ -12,6 +12,23 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
 
+        <style>
+            body {
+                background-image: url("{% static 'main/posties background.jpg' %}");
+                background-repeat: no-repeat;
+                background-size: auto;
+                margin: 1%;
+            }
+
+            h1 {
+                background: yellow;
+                width: 200px;
+                padding: 10px;
+                padding-bottom: 14px;
+                border-style: solid;
+            }
+        </style>
+
         <title>{% block title %}{% endblock %}</title>
     </head>
 
