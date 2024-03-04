@@ -3,7 +3,7 @@
 {% block title %}Posties - Home{% endblock %}
 
 {% block content %}
-    <center><u><h1>POSTIES</h1></u></center>
+    <center><h1 style="background: yellow; width: 200px; padding: 10px; padding-bottom: 14px; border-style: solid;">POSTIES</h1></center>
 
     {% if user.is_authenticated %}
         <button onclick="location.href=href='/logout'" class="btn btn-danger" style="float:right">Logout</button>
