@@ -30,9 +30,9 @@ def add_event(request):
     end = request.GET.get("end", None)
     title = request.GET.get("title", None)
     event = Event(name=str(title), start=start, end=end)
-    event.log_date = datetime.now()
-    event.userID = request.user.id
     event.username = request.user
+    event.userID = request.user.id
+    event.log_date = datetime.now()
     event.save()
     data = {}
     return JsonResponse(data)

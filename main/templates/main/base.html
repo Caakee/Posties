@@ -50,6 +50,9 @@
             }
         </style>
 
+        {{ request.user.username | json_script:"username" }}
+        {{ request.user.id | json_script:"user_id" }}
+
         <title>{% block title %}{% endblock %}</title>
     </head>
 
@@ -60,6 +63,8 @@
 
             {% if user.is_authenticated %}
                 <script>
+                    const username = JSON.parse(document.getElementById('username').textContent);
+                    const user_id = JSON.parse(document.getElementById('user_id').textContent);
                     $(document).ready(function () {
                         var calendar = $('#calendar').fullCalendar({
                             header: false,
@@ -75,18 +80,19 @@
                             contentHeight: '9999',
                             hiddenDays: [0],
                             select: function (start, end, allDay) {
-                                var limit = 30;
-                                var title = prompt("Enter message (" + limit + " char lim):");
+                                var limit = 50;
+                                var title = prompt("Enter message (" + limit + " char limit):");
                                 if (title.length > limit) {
                                     title = title.substr(0, limit);
                                 }
                                 if (title) {
                                     var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                                     var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                                    const log_date = new Date().toLocaleString();
                                     $.ajax({
                                         type: "GET",
                                         url: '/add_event',
-                                        data: {'title': title, 'start': start, 'end': end},
+                                        data: {'title': title + "\n\n" + username + " (ID: " + user_id + ")\n" + log_date, 'start': start, 'end': end},
                                         dataType: "json",
                                         success: function (data) {
                                             calendar.fullCalendar('refetchEvents');
