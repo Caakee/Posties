@@ -6,15 +6,15 @@
     <center><h1>POSTIES</h1></center>
 
     {% if user.is_authenticated %}
-        <button onclick="location.href=href='/logout'" class="btn btn-danger" style="float:right">Logout</button>
+        <button onclick="location.href=href='/logout'" class="btn btn-danger" style="float:right; margin-bottom: 5px">Logout</button>
     {% else %}
-        <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right">Login</button>
+        <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right; margin-bottom: 5px">Login</button>
     {% endif %}
 
-    <button type="button" class="btn btn-light" style="font-size:20px" id="prev">
+    <button type="button" class="btn btn-light" style="font-size:20px; height: 38px; padding-bottom: 0; padding-top: 0; margin-bottom: 5px" id="prev">
         <b>&lt;</b>
     </button>
-    <button type="button" class="btn btn-light" style="font-size:20px" id="next">
+    <button type="button" class="btn btn-light" style="font-size:20px; height: 38px; padding-bottom: 0; padding-top: 0; margin-bottom: 5px" id="next">
         <b>&gt;</b>
     </button>
     <script>

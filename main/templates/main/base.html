@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -40,7 +40,13 @@
             }
 
             .fc-event {
-                height: 50px !important;
+                min-height: 36px;
+            }
+
+            .fc-day-grid-event > .fc-content {
+                padding: 0 1px;
+                white-space: normal;
+                word-wrap: break-word;
             }
         </style>
 
@@ -60,15 +66,19 @@
                             events: '/all_events',
                             selectable: true,
                             selectHelper: true,
-                            eventLimit: true,
                             columnHeader: false,
                             allDayDefault: true,
                             eventOrder: '',
                             eventColor: 'yellow',
                             eventTextColor: 'black',
                             eventBorderColor: 'black',
+                            contentHeight: '9999',
                             select: function (start, end, allDay) {
-                                var title = prompt("Enter Message");
+                                var limit = 30;
+                                var title = prompt("Enter message (" + limit + " char lim):");
+                                if (title.length > limit) {
+                                    title = title.substr(0, limit);
+                                }
                                 if (title) {
                                     var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                                     var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
@@ -96,13 +106,13 @@
                             header: false,
                             events: '/all_events',
                             selectHelper: true,
-                            eventLimit: true,
                             columnHeader: false,
                             allDayDefault: true,
                             eventOrder: '',
                             eventColor: 'yellow',
                             eventTextColor: 'black',
                             eventBorderColor: 'black',
+                            contentHeight: '9999',
                         });
                     });
                 </script>
