@@ -1,0 +1,42 @@
+body {
+    background-image: url("posties background.jpg");
+    background-size: cover;
+    margin: 1% !important;
+}
+
+h1, input, .fc-day-grid-event {
+    background: yellow !important;
+}
+
+h1 {
+    width: 200px;
+    padding: 10px;
+    padding-bottom: 14px;
+    border-style: solid;
+}
+
+#next, #prev {
+    font-size:20px;
+    height: 38px;
+    padding-bottom: 0;
+    padding-top: 0;
+    margin-bottom: 5px;
+}
+
+.fc-today {
+    background-color: inherit !important;
+}
+
+.fc-day-number {
+    display: none;
+}
+
+.fc-event {
+    min-height: 36px;
+}
+
+.fc-day-grid-event > .fc-content {
+    padding: 0 1px;
+    white-space: normal !important;
+    word-wrap: break-word;
+}

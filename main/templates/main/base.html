@@ -3,56 +3,19 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        
+        <title>{% block title %}{% endblock %}</title>
+
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
 
-        <style>
-            body {
-                background-image: url("{% static 'main/posties background.jpg' %}");
-                background-size: cover;
-                margin: 1%;
-            }
-
-            h1 {
-                background: yellow;
-                width: 200px;
-                padding: 10px;
-                padding-bottom: 14px;
-                border-style: solid;
-            }
-
-            input {
-                background: yellow;
-            }
-
-            .fc-today {
-                background-color:inherit !important;
-            }
-
-            .fc-day-number {
-                display: none;
-            }
-
-            .fc-event {
-                min-height: 36px;
-            }
-
-            .fc-day-grid-event > .fc-content {
-                padding: 0 1px;
-                white-space: normal;
-                word-wrap: break-word;
-            }
-        </style>
-
         {{ request.user.username | json_script:"username" }}
-
-        <title>{% block title %}{% endblock %}</title>
     </head>
 
     <body>
@@ -72,7 +35,6 @@
                             columnHeader: false,
                             allDayDefault: true,
                             eventOrder: '',
-                            eventColor: 'yellow',
                             eventTextColor: 'black',
                             eventBorderColor: 'black',
                             contentHeight: '9999',
@@ -114,7 +76,6 @@
                             columnHeader: false,
                             allDayDefault: true,
                             eventOrder: '',
-                            eventColor: 'yellow',
                             eventTextColor: 'black',
                             eventBorderColor: 'black',
                             contentHeight: '9999',
