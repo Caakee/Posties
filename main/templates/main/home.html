@@ -3,7 +3,7 @@
 {% block title %}Posties - Home{% endblock %}
 
 {% block extra_head_content %}
-    <!--Required content to use a calendar, FullCalendar, as a base-->
+    <!-- Required content to use a calendar, FullCalendar, as a base -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -43,7 +43,7 @@
         <script>
             const username = JSON.parse(document.getElementById('username').textContent);
             $(document).ready(function () {
-                var calendar = $('#calendar').fullCalendar({ // If signed in, a "calendar"/series of grids is displayed that allows the user to create posts
+                var calendar = $('#calendar').fullCalendar({ // If signed in, a "calendar"/series of grids is displayed that allows the user to create posts in grid cells
                     header: false,
                     events: '/all_events', // events = posts
                     selectable: true,
@@ -102,6 +102,6 @@
     {% endif %}
     
     <div class="col-md-12">
-        <div id='calendar'></div>
+        <div id='calendar'></div> <!-- calendar = series of grids where posts can be made in grid cells -->
     </div>
 {% endblock %}
