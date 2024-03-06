@@ -23,6 +23,7 @@ h1 {
     margin-bottom: 5px;
 }
 
+/* Removes the highlight from "today" (since a calendar is the base) */
 .fc-today {
     background-color: inherit !important;
 }
@@ -35,6 +36,7 @@ h1 {
     min-height: 36px;
 }
 
+/* Makes text wrap */
 .fc-day-grid-event > .fc-content {
     padding: 0 1px;
     white-space: normal !important;

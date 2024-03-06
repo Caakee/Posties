@@ -3,6 +3,7 @@
 {% block title %}Posties - Home{% endblock %}
 
 {% block extra_head_content %}
+    <!--Required content to use a calendar, FullCalendar, as a base-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -27,6 +28,7 @@
         <b>&gt;</b>
     </button>
     <script>
+        // The buttons skip 2 grids at once to circumvent a problem w/ using a calendar base that causes posts at the beginning/end of the grid to appear on the previous/next grid
         $("#next").click(function() {
             $("#calendar").fullCalendar("next");
             $("#calendar").fullCalendar("next");
@@ -41,23 +43,23 @@
         <script>
             const username = JSON.parse(document.getElementById('username').textContent);
             $(document).ready(function () {
-                var calendar = $('#calendar').fullCalendar({
+                var calendar = $('#calendar').fullCalendar({ // If signed in, a "calendar"/series of grids is displayed that allows the user to create posts
                     header: false,
-                    events: '/all_events',
+                    events: '/all_events', // events = posts
                     selectable: true,
                     selectHelper: true,
                     columnHeader: false,
-                    allDayDefault: true,
-                    eventOrder: '',
+                    allDayDefault: true, // Makes the calendar's event times not appear on posts
+                    eventOrder: '', // Makes posts ordered by recency
                     eventTextColor: 'black',
                     eventBorderColor: 'black',
-                    contentHeight: '9999',
-                    hiddenDays: [0],
-                    select: function (start, end, allDay) {
-                        var limit = 50;
-                        var title = prompt("Enter message (" + limit + " char limit):");
-                        if (title.length > limit) {
-                            title = title.substr(0, limit);
+                    contentHeight: '9999', // Makes posts have dynamic height
+                    hiddenDays: [0], // Removes a column to make the grid a 6x6
+                    select: function (start, end, allDay) { // Function that allows the user to create posts
+                        var charLimit = 50;
+                        var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
+                        if (title.length > charLimit) {
+                            title = title.substr(0, charLimit);
                         }
                         if (title) {
                             var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
@@ -83,17 +85,17 @@
     {% else %}
         <script>
             $(document).ready(function () {
-                var calendar = $('#calendar').fullCalendar({
+                var calendar = $('#calendar').fullCalendar({ // If not signed in, a "calendar"/series of grids is displayed that does not allow the user to create posts
                     header: false,
-                    events: '/all_events',
+                    events: '/all_events', // events = posts
                     selectHelper: true,
                     columnHeader: false,
-                    allDayDefault: true,
-                    eventOrder: '',
+                    allDayDefault: true, // Makes the calendar's event times not appear on posts
+                    eventOrder: '', // Makes posts ordered by recency
                     eventTextColor: 'black',
                     eventBorderColor: 'black',
-                    contentHeight: '9999',
-                    hiddenDays: [0],
+                    contentHeight: '9999', // Makes posts have dynamic height
+                    hiddenDays: [0], // Removes a column to make the grid a 6x6
                 });
             });
         </script>

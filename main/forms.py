@@ -7,7 +7,7 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ["username", "password1", "password2"]
 
-    def clean_username(self):
+    def clean_username(self): # Checks if the inputted username is already in use and allows or denies the account creation appropriately
         username = self.cleaned_data['username']
         try:
             user = User.objects.exclude(pk=self.instance.pk).get(username=username)
