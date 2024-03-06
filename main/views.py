@@ -8,7 +8,7 @@ from django.utils.timezone import datetime
 def home(response):
     all_events = Event.objects.all()
     context = {
-        "events":all_events,
+        "events": all_events,
     }
     return render(response, "main/home.html")
 

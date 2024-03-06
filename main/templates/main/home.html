@@ -2,6 +2,15 @@
 
 {% block title %}Posties - Home{% endblock %}
 
+{% block extra_head_content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+
+    {{ request.user.username | json_script:"username" }}
+{% endblock %}
+
 {% block content %}
     <center><h1>POSTIES</h1></center>
 
@@ -27,6 +36,69 @@
             $("#calendar").fullCalendar("prev");
         });
     </script>
+
+    {% if user.is_authenticated %}
+        <script>
+            const username = JSON.parse(document.getElementById('username').textContent);
+            $(document).ready(function () {
+                var calendar = $('#calendar').fullCalendar({
+                    header: false,
+                    events: '/all_events',
+                    selectable: true,
+                    selectHelper: true,
+                    columnHeader: false,
+                    allDayDefault: true,
+                    eventOrder: '',
+                    eventTextColor: 'black',
+                    eventBorderColor: 'black',
+                    contentHeight: '9999',
+                    hiddenDays: [0],
+                    select: function (start, end, allDay) {
+                        var limit = 50;
+                        var title = prompt("Enter message (" + limit + " char limit):");
+                        if (title.length > limit) {
+                            title = title.substr(0, limit);
+                        }
+                        if (title) {
+                            var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                            var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                            const log_date = new Date().toLocaleString();
+                            $.ajax({
+                                type: "GET",
+                                url: '/add_event',
+                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end},
+                                dataType: "json",
+                                success: function (data) {
+                                    calendar.fullCalendar('refetchEvents');
+                                },
+                                error: function (data) {
+                                    alert('Error: Please try again');
+                                }
+                            });
+                        }
+                    },
+                });
+            });
+        </script>
+    {% else %}
+        <script>
+            $(document).ready(function () {
+                var calendar = $('#calendar').fullCalendar({
+                    header: false,
+                    events: '/all_events',
+                    selectHelper: true,
+                    columnHeader: false,
+                    allDayDefault: true,
+                    eventOrder: '',
+                    eventTextColor: 'black',
+                    eventBorderColor: 'black',
+                    contentHeight: '9999',
+                    hiddenDays: [0],
+                });
+            });
+        </script>
+    {% endif %}
+    
     <div class="col-md-12">
         <div id='calendar'></div>
     </div>
