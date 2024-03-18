@@ -36,6 +36,13 @@ def add_event(request):
     event.save()
     data = {}
     return JsonResponse(data)
+ 
+def remove(request):
+    id = request.GET.get("id", None)
+    event = Event.objects.get(id=id)
+    event.delete()
+    data = {}
+    return JsonResponse(data)
 
 def register(response):
     if response.method == "POST":
