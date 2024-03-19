@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+    
+    <!-- Adds an event right click function -->
+    {% load static %}
+    <script src="{% static 'main/fullcalendar-rightclick.js' %}"></script>
 
     {{ request.user.username | json_script:"username" }}
 {% endblock %}
@@ -79,8 +83,34 @@
                             });
                         }
                     },
-                    eventClick: function (event) {
+                    eventClick: function (event) { // Function that allows the user to edit the text of their own posts
                         if (username == event.username) {
+                            var charLimit = 50;
+                            var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
+                            if (title.length > charLimit) {
+                                title = title.substr(0, charLimit);
+                            }
+                            if (title) {
+                                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+                                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                                const log_date = new Date().toLocaleString();
+                                $.ajax({
+                                    type: "GET",
+                                    url: '/add_event',
+                                    data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        calendar.fullCalendar('refetchEvents');
+                                    },
+                                    error: function (data) {
+                                        alert('Error: Please try again');
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    eventRightclick: function(event, jsEvent, view) { // Function that allows the user to delete their own posts
+                        if (username == event.miscProps.username) {
                             if (confirm("Are you sure you want to delete this post?")) {
                             var id = event.id;
                                 $.ajax({
@@ -97,7 +127,8 @@
                                 });
                             }   
                         }
-                    },
+                        return false; // Prevent browser context menu
+                    }
                 });
             });
         </script>

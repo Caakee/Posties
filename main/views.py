@@ -38,6 +38,9 @@ def add_event(request):
     data = {}
     return JsonResponse(data)
 
+def edit(request):
+    return JsonResponse(data)
+
 def remove(request):
     id = request.GET.get("id", None)
     event = Event.objects.get(id=id)
