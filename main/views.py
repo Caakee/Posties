@@ -21,6 +21,7 @@ def all_events(request):
             'id': event.id,
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
+            'username': event.username,
         })
 
     return JsonResponse(out, safe=False)
@@ -29,18 +30,20 @@ def add_event(request):
     start = request.GET.get("start", None)
     end = request.GET.get("end", None)
     title = request.GET.get("title", None)
-    event = Event(name=str(title), start=start, end=end)
-    event.username = request.user
-    event.userID = request.user.id
-    event.log_date = datetime.now()
+    username = request.GET.get("username", None)
+    userID = request.user.id
+    log_date = datetime.now()
+    event = Event(name=str(title), start=start, end=end, username=str(username), userID=userID, log_date=log_date)
     event.save()
     data = {}
     return JsonResponse(data)
- 
+
 def remove(request):
     id = request.GET.get("id", None)
     event = Event.objects.get(id=id)
-    event.delete()
+    username = request.GET.get("username", None)
+    if(username == event.username):
+        event.delete()
     data = {}
     return JsonResponse(data)
 
