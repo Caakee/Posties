@@ -29,6 +29,7 @@ urlpatterns = [
     path('add_event/', v.add_event, name='add_event'),
     path('remove/', v.remove, name='remove'),
     path('edit/', v.edit, name='edit'),
+    path('help', v.help, name="help"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

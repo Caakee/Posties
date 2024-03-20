@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.http import JsonResponse
 from .models import Event
-from django.utils.timezone import datetime
 from dateutil.parser import parse
 
 # Create your views here.
@@ -33,9 +32,8 @@ def add_event(request):
     end = request.GET.get("end", None)
     title = request.GET.get("title", None)
     username = request.GET.get("username", None)
-    userID = request.user.id
     log_date = parse(request.GET.get("log_date", None))
-    event = Event(name=str(title), start=start, end=end, username=str(username), userID=userID, log_date=log_date)
+    event = Event(name=str(title), start=start, end=end, username=str(username), log_date=log_date)
     event.save()
     data = {}
     return JsonResponse(data)
@@ -70,3 +68,6 @@ def register(response):
         form = RegisterForm()
     
     return render(response, "register/register.html", {"form":form})
+
+def help(response):
+    return render(response, "main/help.html")

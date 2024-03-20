@@ -24,6 +24,7 @@
     {% else %}
         <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right; margin-bottom: 5px">Login</button>
     {% endif %}
+    <button onclick="location.href=href='/help'" class="btn btn-info" style="float:right; margin-bottom: 5px; margin-right: 5px">Help</button>
 
     <button type="button" class="btn btn-light" id="prev">
         <b>&lt;</b>
@@ -97,7 +98,7 @@
                                 $.ajax({
                                     type: "GET",
                                     url: '/edit',
-                                    data: {'id': id, 'title': title + "\n\n" + username  + "\n" + log_date, 'username': username},
+                                    data: {'id': id, 'title': title + "\n\n" + username  + "\n" + log_date + " (Edited)", 'username': username},
                                     dataType: "json",
                                     success: function (data) {
                                         calendar.fullCalendar('refetchEvents');
