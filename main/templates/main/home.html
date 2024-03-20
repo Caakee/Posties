@@ -52,7 +52,6 @@
                     header: false,
                     events: '/all_events', // events = posts
                     selectable: true,
-                    selectHelper: true,
                     columnHeader: false,
                     allDayDefault: true, // Makes the calendar's event times not appear on posts
                     eventOrder: '', // Makes posts ordered by recency
@@ -60,6 +59,10 @@
                     eventBorderColor: 'black',
                     contentHeight: '9999', // Makes posts have dynamic height
                     hiddenDays: [0], // Removes a column to make the grid a 6x6
+                    eventConstraint:{
+                        start: '00:00',
+                        end: '24:00',
+                    }, 
                     select: function (start, end, allDay) { // Function that allows the user to create posts
                         var charLimit = 50;
                         var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
@@ -139,7 +142,6 @@
                 var calendar = $('#calendar').fullCalendar({ // If not signed in, a "calendar"/series of grids is displayed that does not allow the user to create posts
                     header: false,
                     events: '/all_events', // events = posts
-                    selectHelper: true,
                     columnHeader: false,
                     allDayDefault: true, // Makes the calendar's event times not appear on posts
                     eventOrder: '', // Makes posts ordered by recency
