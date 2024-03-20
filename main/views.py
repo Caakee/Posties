@@ -22,7 +22,7 @@ def all_events(request):
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
             'username': event.username,
-            'log_date': event.log_date.strftime("%#m/%#d/%Y, %I:%M:%S %p"),
+            'log_date': event.log_date.strftime("%#m/%#d/%Y, %I:%M:%S %p"), # The formatting prevents the date format from changing after a post edit
         })
 
     return JsonResponse(out, safe=False)
@@ -32,7 +32,7 @@ def add_event(request):
     end = request.GET.get("end", None)
     title = request.GET.get("title", None)
     username = request.GET.get("username", None)
-    log_date = parse(request.GET.get("log_date", None))
+    log_date = parse(request.GET.get("log_date", None)) # Parse makes sure the date is of the right format, it cannot be passed otherwise
     event = Event(name=str(title), start=start, end=end, username=str(username), log_date=log_date)
     event.save()
     data = {}

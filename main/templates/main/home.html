@@ -59,10 +59,18 @@
                     eventBorderColor: 'black',
                     contentHeight: '9999', // Makes posts have dynamic height
                     hiddenDays: [0], // Removes a column to make the grid a 6x6
-                    eventConstraint:{
-                        start: '00:00',
-                        end: '24:00',
-                    }, 
+                    // Prevents selecting more than one "day"/grid cell at a time, making "long-posting" impossible
+                    selectAllow: function(selectInfo){
+                        const oneDay = 86400000; // Number of milliseconds in a day
+                        var startDay = selectInfo.start;
+                        var endDay = selectInfo.end - oneDay; // selectInfo.end always starts one day past selectInfo.start
+                        if (startDay == endDay) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    },
                     select: function (start, end, allDay) { // Function that allows the user to create posts
                         var charLimit = 50;
                         var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
@@ -76,7 +84,7 @@
                             $.ajax({
                                 type: "GET",
                                 url: '/add_event',
-                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username, 'log_date': log_date},
+                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username, 'log_date': log_date}, // Adds extra info to title for display purposes only
                                 dataType: "json",
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
@@ -87,9 +95,8 @@
                             });
                         }
                     },
-                    eventClick: function (event) { // Function that allows the user to edit the text of their own posts
+                    eventClick: function (event) { // Function that allows the user to left-click their posts to edit the text of them
                         if (username == event.username) {
-                            console.log(event);
                             var charLimit = 50;
                             var title = prompt("Enter an updated message (" + charLimit + " char limit):"); // title = post message
                             if (title.length > charLimit) {
@@ -101,7 +108,7 @@
                                 $.ajax({
                                     type: "GET",
                                     url: '/edit',
-                                    data: {'id': id, 'title': title + "\n\n" + username  + "\n" + log_date + " (Edited)", 'username': username},
+                                    data: {'id': id, 'title': title + "\n\n" + username  + "\n" + log_date + " (Edited)", 'username': username}, // Adds extra info to title for display purposes only
                                     dataType: "json",
                                     success: function (data) {
                                         calendar.fullCalendar('refetchEvents');
@@ -113,7 +120,7 @@
                             }
                         }
                     },
-                    eventRightclick: function(event, jsEvent, view) { // Function that allows the user to delete their own posts
+                    eventRightclick: function(event, jsEvent, view) { // Function that allows the user right-click their posts to delete them
                         if (username == event.miscProps.username) {
                             if (confirm("Are you sure you want to delete this post?")) {
                             var id = event.id;
