@@ -72,7 +72,7 @@
                             $.ajax({
                                 type: "GET",
                                 url: '/add_event',
-                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username},
+                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username, 'log_date': log_date},
                                 dataType: "json",
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');
@@ -85,19 +85,19 @@
                     },
                     eventClick: function (event) { // Function that allows the user to edit the text of their own posts
                         if (username == event.username) {
+                            console.log(event);
                             var charLimit = 50;
-                            var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
+                            var title = prompt("Enter an updated message (" + charLimit + " char limit):"); // title = post message
                             if (title.length > charLimit) {
                                 title = title.substr(0, charLimit);
                             }
                             if (title) {
-                                var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                                var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                                const log_date = new Date().toLocaleString();
+                                var id = event.id;
+                                const log_date = event.log_date;
                                 $.ajax({
                                     type: "GET",
-                                    url: '/add_event',
-                                    data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username},
+                                    url: '/edit',
+                                    data: {'id': id, 'title': title + "\n\n" + username  + "\n" + log_date, 'username': username},
                                     dataType: "json",
                                     success: function (data) {
                                         calendar.fullCalendar('refetchEvents');
