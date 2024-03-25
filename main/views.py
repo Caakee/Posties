@@ -43,7 +43,7 @@ def edit(request):
     event = Event.objects.get(id=id)
     title = request.GET.get("title", None)
     username = request.GET.get("username", None)
-    if(username == event.username):
+    if (username == event.username):
         event.name = str(title)
         event.save()
     data = {}
@@ -53,7 +53,7 @@ def remove(request):
     id = request.GET.get("id", None)
     event = Event.objects.get(id=id)
     username = request.GET.get("username", None)
-    if(username == event.username):
+    if (username == event.username):
         event.delete()
     data = {}
     return JsonResponse(data)
