@@ -22,7 +22,7 @@ def all_events(request):
             'start': event.start.strftime("%m/%d/%Y, %H:%M:%S"),
             'end': event.end.strftime("%m/%d/%Y, %H:%M:%S"),
             'username': event.username,
-            'log_date': event.log_date.strftime("%#m/%#d/%Y, %I:%M:%S %p"), # The formatting prevents the date format from changing after a post edit
+            'log_date': event.log_date.strftime("%#m/%#d/%Y, %#I:%M:%S %p"), # The formatting prevents the date format from changing after a post edit
         })
 
     return JsonResponse(out, safe=False)
