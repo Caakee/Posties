@@ -22,7 +22,7 @@ class Profile(models.Model):
     def save(self, *args, **kwargs):
         super().save()
         img = Image.open(self.avatar.path)
-        if img.height > 200 or img.width > 200:
+        if img.height > 200 or img.width > 200: # Downsizes large images to improve performance
             new_img = (200, 200)
             img.thumbnail(new_img)
             img.save(self.avatar.path)

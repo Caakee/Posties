@@ -34,4 +34,8 @@
         <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
         <button type="reset" class="btn btn-dark btn-lg">Reset</button>
     </form>
+    {% for message in messages %}
+    <br>
+    {{ message }}
+    {% endfor %}
 {% endblock %}
