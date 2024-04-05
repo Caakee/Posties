@@ -3,6 +3,7 @@ from .forms import RegisterForm
 from django.http import JsonResponse
 from .models import Event
 from dateutil.parser import parse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(response):
@@ -71,3 +72,7 @@ def register(response):
 
 def help(response):
     return render(response, "main/help.html")
+
+@login_required
+def profile(request):
+    return render(request, 'main/profile.html')
