@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Profile
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -14,3 +15,11 @@ class RegisterForm(UserCreationForm):
         except User.DoesNotExist:
             return username
         raise forms.ValidationError(u'Username "%s" is already in use.' % username)
+
+class UpdateProfileForm(forms.ModelForm):
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+    bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))
+
+    class Meta:
+        model = Profile
+        fields = ['avatar', 'bio']
