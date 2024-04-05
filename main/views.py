@@ -76,15 +76,18 @@ def help(response):
     return render(response, "main/help.html")
 
 @login_required
-def profile(request):
+def my_profile(request):
     if request.method == 'POST':
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
 
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Your profile has been updated successfully')
-            return redirect(to='users-profile')
+            return redirect(to='my_profile')
     else:
         profile_form = UpdateProfileForm(instance=request.user.profile)
 
-    return render(request, 'main/profile.html', {'profile_form': profile_form})
+    return render(request, 'main/my_profile.html', {'profile_form': profile_form})
+
+def profile(request, username):
+    return render(request, 'main/profile.html')

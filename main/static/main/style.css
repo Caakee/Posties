@@ -8,6 +8,14 @@ h1, input, .fc-day-grid-event {
     background: yellow !important;
 }
 
+.form-control {
+    background: yellow !important;
+}
+
+.form-control-file {
+    background: none !important;
+}
+
 h1 {
     width: 200px;
     padding: 10px;

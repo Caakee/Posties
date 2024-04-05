@@ -1,9 +1,9 @@
 {% extends "main/base.html" %}
 
-{% block title %}Posties - {{ user.username }}'s Profile{% endblock %}
+{% block title %}Posties - Your Profile{% endblock %}
 
 {% block content %}
-    <center><h1 style="width: 320px;">{{ user.username }}'s PROFILE</h1></center>
+    <center><h1 style="width: 320px;">YOUR PROFILE</h1></center>
     <div style="width: 200px;">
         <center>
             <h2>{{ user.username }}</h2>
@@ -28,9 +28,16 @@
             {% csrf_token %}
             <div class="form-row">
                 <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="small mb-1">Change Avatar:</label>
+                        {{ profile_form.avatar }}
+                    </div>
                     <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
                 </div>
             </div>
+            <br>
+            <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
         </form>
     </div>
 {% endblock %}
