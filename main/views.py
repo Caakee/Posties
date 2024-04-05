@@ -94,11 +94,9 @@ def my_profile(request):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
-    url_name = resolve(request.path).url_name
 
     context = {
         'profile': profile,
-        'url_name': url_name,
     }
 
     return render(request, 'main/profile.html', context)

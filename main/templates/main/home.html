@@ -21,6 +21,7 @@
 
     {% if user.is_authenticated %}
         <button onclick="location.href=href='/logout'" class="btn btn-danger" style="float:right; margin-bottom: 5px">Logout</button>
+        <button onclick="location.href=href='/profile'" class="btn btn-warning" style="float:right; margin-bottom: 5px; margin-right: 5px">Profile</button>
     {% else %}
         <button onclick="location.href=href='/login'" class="btn btn-success" style="float:right; margin-bottom: 5px">Login</button>
     {% endif %}
