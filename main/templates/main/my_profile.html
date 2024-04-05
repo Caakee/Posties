@@ -7,7 +7,7 @@
     <div style="width: 200px;">
         <center>
             <h2>{{ user.username }}</h2>
-            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="width: auto; height: auto; padding: 0"/>
+            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="width: auto; height: auto; padding: 0" alt="Your profile picture"/>
         </center>
     </div>
     <br>
@@ -32,7 +32,8 @@
                         <label class="small mb-1">Change Avatar:</label>
                         {{ profile_form.avatar }}
                     </div>
-                    <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
+                    <label class="small mb-1">Bio:</label>
+                    {{ profile_form.bio }}
                 </div>
             </div>
             <br>

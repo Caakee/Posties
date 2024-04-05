@@ -1,13 +1,13 @@
 {% extends "main/base.html" %}
 
-{% block title %}Posties - {{ user.username }}'s Profile{% endblock %}
+{% block title %}Posties - {{ profile.user }}'s Profile{% endblock %}
 
 {% block content %}
-    <center><h1 style="width: 320px;">{{ user.username }}'s PROFILE</h1></center>
+    <center><h1 style="width: 320px;">{{ profile.user }}'s PROFILE</h1></center>
     <div style="width: 200px;">
         <center>
-            <h2>{{ user.username }}</h2>
-            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="width: auto; height: auto; padding: 0"/>
+            <h2>{{ profile.user }}</h2>
+            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="width: auto; height: auto; padding: 0" alt="This user's profile picture"/>
         </center>
     </div>
     <br>
@@ -28,7 +28,7 @@
             {% csrf_token %}
             <div class="form-row">
                 <div class="col-md-5">
-                    <label class="small mb-1">Bio:</label> {{ profile_form.bio }}
+                    <label class="small mb-1">Bio:</label> {{ profile.bio }}
                 </div>
             </div>
         </form>

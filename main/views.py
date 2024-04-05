@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import RegisterForm
 from django.http import JsonResponse
-from .models import Event
+from .models import Event, Profile
 from dateutil.parser import parse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 from .forms import UpdateProfileForm
+from django.urls import resolve
 
 # Create your views here.
 def home(response):
@@ -90,4 +92,13 @@ def my_profile(request):
     return render(request, 'main/my_profile.html', {'profile_form': profile_form})
 
 def profile(request, username):
-    return render(request, 'main/profile.html')
+    user = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user=user)
+    url_name = resolve(request.path).url_name
+
+    context = {
+        'profile': profile,
+        'url_name': url_name,
+    }
+
+    return render(request, 'main/profile.html', context)
