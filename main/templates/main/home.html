@@ -17,6 +17,12 @@
 {% endblock %}
 
 {% block content %}
+    <!-- Prevents the successful login message from appearing -->
+    {% if messages %} 
+        {% for message in messages %}
+        {% endfor %}
+    {% endif %}
+
     <center><h1>POSTIES</h1></center>
 
     {% if user.is_authenticated %}

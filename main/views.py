@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .forms import UpdateProfileForm
-from django.urls import resolve
 
 # Create your views here.
 def home(response):
@@ -29,7 +28,6 @@ def all_events(request):
             'username': event.username,
             'log_date': event.log_date.strftime("%#m/%#d/%Y, %#I:%M:%S %p"), # The formatting prevents the date format from changing after a post edit
         })
-
     return JsonResponse(out, safe=False)
  
 def add_event(request):
@@ -71,7 +69,6 @@ def register(response):
             return redirect("login")
     else:
         form = RegisterForm()
-    
     return render(response, "register/register.html", {"form":form})
 
 def help(response):
@@ -81,7 +78,6 @@ def help(response):
 def my_profile(request):
     if request.method == 'POST':
         profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
-
         if profile_form.is_valid():
             profile_form.save()
             messages.success(request, 'Your profile has been updated successfully.')
@@ -90,15 +86,12 @@ def my_profile(request):
         return redirect(to='my_profile')
     else:
         profile_form = UpdateProfileForm(instance=request.user.profile)
-
     return render(request, 'main/my_profile.html', {'profile_form': profile_form})
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=user)
-
     context = {
         'profile': profile,
     }
-
     return render(request, 'main/profile.html', context)
