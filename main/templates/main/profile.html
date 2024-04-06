@@ -3,14 +3,16 @@
 {% block title %}Posties - {{ profile.user }}'s Profile{% endblock %}
 
 {% block content %}
-    <center><h1 style="width: 320px;">{{ profile.user }}</h1></center>
-    <button onclick="location.href=href='/'" class="btn btn-primary" style="float:right; margin-bottom: 5px; margin-right: 5px">Home</button>
-    <div style="width: 200px;">
-        <center>
-            <h2>{{ profile.user }}</h2>
+    <center>
+        <h1 class="profileHeader">{{ profile.user }}</h1>
+        <br>
+        <button onclick="location.href=href='/'" class="btn btn-primary" style="float:right; margin-bottom: 5px; margin-right: 5px">Home</button>
+        <div style="width: 200px;">
             <img class="rounded-circle account-img" src="{{ profile.avatar.url }}" style="width: auto; height: auto; padding: 0" alt="This user's profile picture"/>
-        </center>
-    </div>
-    <br>
-    <label class="small mb-1">Bio:</label> {{ profile.bio }}
+        </div>
+        <br>
+        <div id="bio" style="background-color: white; border-style: solid; border-width: 1px; padding: 10px; width: 500px;">
+            {{ profile.bio }}
+        </div>
+    </center>
 {% endblock %}

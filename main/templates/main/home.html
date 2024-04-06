@@ -88,10 +88,12 @@
                             var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                             var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
                             const log_date = new Date().toLocaleString();
+                            let text = "Free Web Building Tutorials!";
+                            let result = text.link("https://www.w3schools.com");
                             $.ajax({
                                 type: "GET",
                                 url: '/add_event',
-                                data: {'title': title + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username, 'log_date': log_date}, // Adds extra info to title for display purposes only
+                                data: {'title': title + result + "\n\n" + username + "\n" + log_date, 'start': start, 'end': end, 'username': username, 'log_date': log_date}, // Adds extra info to title for display purposes only
                                 dataType: "json",
                                 success: function (data) {
                                     calendar.fullCalendar('refetchEvents');

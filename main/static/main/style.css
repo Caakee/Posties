@@ -4,16 +4,16 @@ body {
     margin: 1% !important;
 }
 
-h1, input, .fc-day-grid-event {
+h1, input {
+    background: yellow;
+}
+
+.fc-day-grid-event {
     background: yellow !important;
 }
 
-.form-control {
-    background: yellow !important;
-}
-
-.form-control-file {
-    background: none !important;
+#id_avatar {
+    background: white;
 }
 
 h1 {
@@ -49,4 +49,9 @@ h1 {
     padding: 0 1px;
     white-space: normal !important;
     word-wrap: break-word;
+}
+
+.profileHeader {
+    width: 350px;
+    margin-bottom: 0;
 }
