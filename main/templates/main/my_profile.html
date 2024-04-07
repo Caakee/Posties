@@ -4,11 +4,11 @@
 
 {% block content %}
     <center>
-        <h1 class="profileHeader">{{ user.username }}</h1>
+        <h1 class="profile-header">{{ user.username }}</h1>
         <br>
-        <button onclick="location.href=href='/'" class="btn btn-primary" style="float:right; margin-bottom: 5px; margin-right: 5px">Home</button>
-        <div style="width: 200px;">
-            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="width: auto; height: auto; padding: 0" alt="Your profile picture"/>
+        <button onclick="location.href=href='/'" class="btn btn-primary nav-button-right">Home</button>
+        <div class="pfp-div">
+            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="Your profile picture"/>
         </div>
         <br>
         {% if user_form.errors %}

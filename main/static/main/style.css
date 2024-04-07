@@ -1,19 +1,8 @@
+/* General styling */
 body {
     background-image: url("posties background.jpg");
     background-size: cover;
     margin: 1% !important;
-}
-
-h1, input {
-    background: yellow;
-}
-
-.fc-day-grid-event {
-    background: yellow !important;
-}
-
-#id_avatar {
-    background: white;
 }
 
 h1 {
@@ -23,6 +12,20 @@ h1 {
     border-style: solid;
 }
 
+h1, input {
+    background: yellow;
+}
+
+.nav-button {
+    float: right;
+    margin-right: 5px;
+}
+
+.nav-button-right {
+    float: right;
+}
+
+/* Home Page */
 #next, #prev {
     font-size:20px;
     height: 38px;
@@ -31,8 +34,7 @@ h1 {
     margin-bottom: 5px;
 }
 
-/* Removes the highlight from "today" (since a calendar is the base) */
-.fc-today {
+.fc-today { /* Removes the highlight from "today" (since a calendar is the base) */
     background-color: inherit !important;
 }
 
@@ -42,16 +44,38 @@ h1 {
 
 .fc-event {
     min-height: 36px;
+    background: yellow !important;
 }
 
-/* Makes text wrap */
-.fc-day-grid-event > .fc-content {
+.fc-day-grid-event > .fc-content { /* Makes text wrap */
     padding: 0 1px;
     white-space: normal !important;
     word-wrap: break-word;
 }
 
-.profileHeader {
-    width: 350px;
+/* Profile Pages */
+.profile-header {
+    width: fit-content;
     margin-bottom: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.account-img {
+    width: auto;
+    height: auto;
+    padding: 0;
+}
+
+.pfp-div {
+    width: 200px;
+}
+
+#id_avatar {
+    background: white;
+}
+
+/* Login/Registration Pages */
+.signed-in-header {
+    width: 500px;
 }
