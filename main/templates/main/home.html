@@ -17,18 +17,31 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Post Management Modal -->
+    <div class="modal fade" id="manageModal" tabindex="-1" aria-labelledby="manageModalLabel" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">What would you like to do?</h5>
+            <h5 class="modal-title" id="manageModalLabel">What would you like to do?</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="location.href=href='/profile/' + username">View Profile</button>
             <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="editPost()">Edit Post</button>
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost()">Delete Post</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- View Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel">What would you like to do?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="location.href=href='/profile/' + eventUser">View Profile</button>
             </div>
         </div>
         </div>
@@ -42,14 +55,7 @@
 
     <center><h1>POSTIES</h1></center>
 
-    {% if user.is_authenticated %}
-        <button onclick="location.href=href='/logout'" class="btn btn-danger nav-button-right">Logout</button>
-        <button onclick="location.href=href='/profile'" class="btn btn-warning nav-button">Profile</button>
-    {% else %}
-        <button onclick="location.href=href='/login'" class="btn btn-success nav-button-right">Login</button>
-    {% endif %}
-    <button onclick="location.href=href='/help'" class="btn btn-info nav-button" style="margin-bottom: 5px;">Help</button>
-
+    <!-- Navigation Buttons -->
     <button type="button" class="btn btn-light" id="prev">
         <b>&lt;</b>
     </button>
@@ -67,75 +73,83 @@
             $("#calendar").fullCalendar("prev");
         });
     </script>
-
     {% if user.is_authenticated %}
-        <script>
-            const username = JSON.parse(document.getElementById('username').textContent);
+        <button onclick="location.href=href='/logout'" class="btn btn-danger nav-button-right">Logout</button>
+        <button onclick="location.href=href='/profile'" class="btn btn-warning nav-button">Profile</button>
+    {% else %}
+        <button onclick="location.href=href='/login'" class="btn btn-success nav-button-right">Login</button>
+    {% endif %}
+    <button onclick="location.href=href='/help'" class="btn btn-info nav-button" style="margin-bottom: 5px;">Help</button>
 
-            function editPost() {
-                var charLimit = 50;
-                var title = prompt("Enter an updated message (" + charLimit + " char limit):"); // title = post message
-                if (title.length > charLimit) {
-                    title = title.substr(0, charLimit);
-                }
-                if (title) {
-                    $.ajax({
-                        type: "GET",
-                        url: '/edit',
-                        data: {'id': Aid, 'title': title + "\n\n" + username  + "\n" + Alog_date + " (Edited)", 'username': username}, // Adds extra info to title for display purposes only
-                        dataType: "json",
-                        success: function (data) {
-                            location.reload();
-                            //calendar.fullCalendar('refetchEvents');
-                        },
-                        error: function (data) {
-                            alert('Error: Please try again');
-                        }
-                    });
-                }
-            }
-            function deletePost() {
-                if (confirm("Are you sure you want to delete this post?")) {
-                    $.ajax({
-                        type: "GET",
-                        url: '/remove',
-                        data: {'id': Aid, 'username': username},
-                        dataType: "json",
-                        success: function (data) {
-                            location.reload();
-                            //calendar.fullCalendar('refetchEvents');
-                        },
-                        error: function (data) {
-                            alert('Error: Please try again');
-                        }
-                    });
-                }
-            }
+    <script>
+        const username = JSON.parse(document.getElementById('username').textContent);
+        var isAuthenticated = '{{request.user.is_authenticated}}' === 'True';
 
-            $(document).ready(function () {
-                var calendar = $('#calendar').fullCalendar({ // If signed in, a "calendar"/series of grids is displayed that allows the user to create posts in grid cells
-                    header: false,
-                    events: '/all_events', // events = posts
-                    selectable: true,
-                    columnHeader: false,
-                    allDayDefault: true, // Makes the calendar's event times not appear on posts
-                    eventOrder: '', // Makes posts ordered by recency
-                    eventTextColor: 'black',
-                    eventBorderColor: 'black',
-                    contentHeight: '9999', // Makes posts have dynamic height
-                    hiddenDays: [0], // Removes a column to make the grid a 6x6
-                    selectAllow: function(selectInfo) { // Prevents selecting more than one "day"/grid cell at a time, making "long-posting" impossible
-                        const oneDay = 86400000; // Number of milliseconds in a day
-                        var startDay = selectInfo.start;
-                        var endDay = selectInfo.end - oneDay; // selectInfo.end always starts one day past selectInfo.start
-                        if (startDay == endDay) {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
+        function editPost() {
+            var charLimit = 50;
+            var title = prompt("Enter an updated message (" + charLimit + " char limit):"); // title = post message
+            if (title.length > charLimit) {
+                title = title.substr(0, charLimit);
+            }
+            if (title) {
+                $.ajax({
+                    type: "GET",
+                    url: '/edit',
+                    data: {'id': Aid, 'title': title + "\n\n" + username  + "\n" + Alog_date + " (Edited)", 'username': username}, // Adds extra info to title for display purposes only
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                        //calendar.fullCalendar('refetchEvents');
                     },
-                    select: function (start, end, allDay) { // Allows the user to create posts
+                    error: function (data) {
+                        alert('Error: Please try again');
+                    }
+                });
+            }
+        }
+        function deletePost() {
+            if (confirm("Are you sure you want to delete this post?")) {
+                $.ajax({
+                    type: "GET",
+                    url: '/remove',
+                    data: {'id': Aid, 'username': username},
+                    dataType: "json",
+                    success: function (data) {
+                        location.reload();
+                        //calendar.fullCalendar('refetchEvents');
+                    },
+                    error: function (data) {
+                        alert('Error: Please try again');
+                    }
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            var calendar = $('#calendar').fullCalendar({ // If signed in, a "calendar"/series of grids is displayed that allows the user to create posts in grid cells
+                header: false,
+                events: '/all_events', // events = posts
+                selectable: true,
+                columnHeader: false,
+                allDayDefault: true, // Makes the calendar's event times not appear on posts
+                eventOrder: '', // Makes posts ordered by recency
+                eventTextColor: 'black',
+                eventBorderColor: 'black',
+                contentHeight: '9999', // Makes posts have dynamic height
+                hiddenDays: [0], // Removes a column to make the grid a 6x6
+                selectAllow: function(selectInfo) { // Prevents selecting more than one "day"/grid cell at a time, making "long-posting" impossible
+                    const oneDay = 86400000; // Number of milliseconds in a day
+                    var startDay = selectInfo.start;
+                    var endDay = selectInfo.end - oneDay; // selectInfo.end always starts one day past selectInfo.start
+                    if (startDay == endDay) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                },
+                select: function (start, end, allDay) { // Allows the user to create posts
+                    if (isAuthenticated) {
                         var charLimit = 50;
                         var title = prompt("Enter message (" + charLimit + " char limit):"); // title = post message
                         if (title.length > charLimit) {
@@ -158,34 +172,22 @@
                                 }
                             });
                         }
-                    },
-                    eventClick: function (event) { // Allows the user to left-click their posts to edit the text of them
-                        if (username == event.username) {
-                            Aid = event.id;
-                            Alog_date = event.log_date;
-                            $("#exampleModal").modal("show");
-                        }
-                    },
-                });
+                    }
+                },
+                eventClick: function (event) { // Allows the user to left-click their posts to edit the text of them
+                    if (username == event.username) {
+                        Aid = event.id;
+                        Alog_date = event.log_date;
+                        $("#manageModal").modal("show");
+                    }
+                    else {
+                        eventUser = event.username;
+                        $("#profileModal").modal("show");
+                    }
+                },
             });
-        </script>
-    {% else %}
-        <script>
-            $(document).ready(function () {
-                var calendar = $('#calendar').fullCalendar({ // If not signed in, a "calendar"/series of grids is displayed that does not allow the user to create posts
-                    header: false,
-                    events: '/all_events', // events = posts
-                    columnHeader: false,
-                    allDayDefault: true, // Makes the calendar's event times not appear on posts
-                    eventOrder: '', // Makes posts ordered by recency
-                    eventTextColor: 'black',
-                    eventBorderColor: 'black',
-                    contentHeight: '9999', // Makes posts have dynamic height
-                    hiddenDays: [0], // Removes a column to make the grid a 6x6
-                });
-            });
-        </script>
-    {% endif %}
+        });
+    </script>
     
     <div class="col-md-12">
         <div id='calendar'></div> <!-- calendar = series of grids where posts can be made in grid cells -->
