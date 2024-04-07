@@ -17,36 +17,6 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Post Management Modal -->
-    <div class="modal fade" id="manageModal" tabindex="-1" aria-labelledby="manageModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="manageModalLabel">What would you like to do?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="editPost()">Edit Post</button>
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost()">Delete Post</button>
-            </div>
-        </div>
-        </div>
-    </div>
-    <!-- View Profile Modal -->
-    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="profileModalLabel">What would you like to do?</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="location.href=href='/profile/' + eventUser">View Profile</button>
-            </div>
-        </div>
-        </div>
-    </div>
-
     <!-- Prevents the successful login message from appearing -->
     {% if messages %} 
         {% for message in messages %}
@@ -81,6 +51,36 @@
     {% endif %}
     <button onclick="location.href=href='/help'" class="btn btn-info nav-button" style="margin-bottom: 5px;">Help</button>
 
+    <!-- Post Management Modal -->
+    <div class="modal fade" id="manageModal" tabindex="-1" aria-labelledby="manageModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="manageModalLabel">What would you like to do?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="editPost()">Edit Post</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deletePost()">Delete Post</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- View Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="profileModalLabel">Continue to profile?</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-bs-dismiss="modal" onclick="location.href=href='/profile/' + eventUser">View Profile</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
     <script>
         const username = JSON.parse(document.getElementById('username').textContent);
         var isAuthenticated = '{{request.user.is_authenticated}}' === 'True';
@@ -95,7 +95,7 @@
                 $.ajax({
                     type: "GET",
                     url: '/edit',
-                    data: {'id': Aid, 'title': title + "\n\n" + username  + "\n" + Alog_date + " (Edited)", 'username': username}, // Adds extra info to title for display purposes only
+                    data: {'id': eventID, 'title': title + "\n\n" + username  + "\n" + eventLogDate + " (Edited)", 'username': username}, // Adds extra info to title for display purposes only
                     dataType: "json",
                     success: function (data) {
                         location.reload();
@@ -112,7 +112,7 @@
                 $.ajax({
                     type: "GET",
                     url: '/remove',
-                    data: {'id': Aid, 'username': username},
+                    data: {'id': eventID, 'username': username},
                     dataType: "json",
                     success: function (data) {
                         location.reload();
@@ -174,10 +174,10 @@
                         }
                     }
                 },
-                eventClick: function (event) { // Allows the user to left-click their posts to edit the text of them
+                eventClick: function (event) { // Allows the user to manage their own posts and view other users' profiles
                     if (username == event.username) {
-                        Aid = event.id;
-                        Alog_date = event.log_date;
+                        eventID = event.id;
+                        eventLogDate = event.log_date;
                         $("#manageModal").modal("show");
                     }
                     else {
